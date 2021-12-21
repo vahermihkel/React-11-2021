@@ -5,6 +5,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  color: black;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;

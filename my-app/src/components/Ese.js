@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Ese(omadused) {
   function lisaOstukorvi() {
@@ -16,6 +18,10 @@ function Ese(omadused) {
     } else {
       sessionStorage.setItem("ostukorv", JSON.stringify([toode]));
     }
+    toast.success("Lisatud ostukorvi!", {
+      position: "bottom-right",
+      theme: "dark"
+      });
   }
 
   return (<div>
@@ -27,6 +33,7 @@ function Ese(omadused) {
     </Link>
     <button onClick={lisaOstukorvi}>Lisa ostukorvi</button>
     <br /> <br></br>
+    <ToastContainer />
   </div>)
 }
 

@@ -1,4 +1,5 @@
 import EsemeteList from "../components/EsemeteList";
+import Button from 'react-bootstrap/Button';
 
 // props teema
 
@@ -47,13 +48,13 @@ function Kodu() {
   // </form>
 
   return(<div>
-    <button onClick={nupuvajutus}>Järjesta A-Z</button>
-    <button>Järjesta Z-A</button>
-    <button>Järjesta hind kasvavalt</button>
-    <button>Järjesta hind kahanevalt</button>
+    <Button variant="success" onClick={nupuvajutus}>Järjesta A-Z</Button>
+    <Button variant="success">Järjesta Z-A</Button>
+    <Button variant="success">Järjesta hind kasvavalt</Button>
+    <Button variant="success">Järjesta hind kahanevalt</Button>
     <br/><br/>
-    <button>Näita kodumaiseid</button>
-    <button>Näita e-ainete vabu</button>
+    <Button variant="outline-primary">Näita kodumaiseid</Button>
+    <Button variant="outline-primary">Näita e-ainete vabu</Button>
     <EsemeteList esemed={saaEsemed()} />
       
       
