@@ -1,18 +1,23 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 function Menüü() {
+  const { t, i18n } = useTranslation();
+
   function eestiKeel() {
-    localStorage.setItem("veebilehe_keel", "eesti");
+    localStorage.setItem("veebilehe_keel", "ee");
+    i18n.changeLanguage('ee');
   }
 
   function ingliseKeel() {
-    localStorage.setItem("veebilehe_keel", "inglise");
+    localStorage.setItem("veebilehe_keel", "en");
+    i18n.changeLanguage('en');
   }
 
   return (
   <div className="navbar">
     <Link to="/">
-      <button className="main-button">Mine avalehele</button>
+      <button className="main-button">{t("home_link")}</button>
     </Link>
     <Link to="/admin">
       <div className="my-text">Mine administraatori lehele</div>

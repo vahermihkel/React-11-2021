@@ -1,5 +1,7 @@
 import EsemeteList from "../components/EsemeteList";
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 
 // props teema
 
@@ -19,6 +21,9 @@ import Button from 'react-bootstrap/Button';
 //   ]
 
 function Kodu() {
+  const { t } = useTranslation();
+  const [esemed, uuendaEsemed] = useState(saaEsemed());
+
   function saaEsemed() {
     if(JSON.parse(localStorage.getItem("tooted"))) {
       return JSON.parse(localStorage.getItem("tooted"));
@@ -35,8 +40,39 @@ function Kodu() {
     }
   }
 
-  function nupuvajutus() {
-    console.log("väljalogimine brauseri konsooli");
+  function sortNimetusKasv() {
+    let tooted = saaEsemed();
+    // tooted väärtuseks [{"nimetus":"Coca cola","price":"2","kategooria":"coca","pilt":"https://www.selver.ee/img/800/800/resize/5/0/5000112614497.jpg"},{"nimetus":"Fanta","price":"1.5","kategooria":"saab","pilt":""},{"nimetus":"Sprite","price":"2","kategooria":"coca","pilt":""},{"nimetus":"Vitamin well","price":3,"kategooria":"vesi","pilt":"https://www.vitaminwell.com/wp-content/uploads/2016/06/1466405668.jpg"},{"nimetus":"Vichi","price":2.5,"kategooria":"vesi"},{"nimetus":"","price":"","kategooria":"","pilt":""},{"nimetus":"321","price":"123","kategooria":"coca","pilt":"123"},{"nimetus":"321","price":"123","kategooria":"coca","pilt":"123"},{"nimetus":"","price":"","kategooria":"coca","pilt":""}]
+    tooted.sort((a,b) => a.nimetus.localeCompare(b.nimetus));
+    // ["f","g","t","s"].sort( (a,b) => a.localeCompare(b) );
+    // ["f","g","t","s"].sort(("f","g")=> "f".localeCompare("g"))
+    // ["f","g","t","s"].sort(("g","t")=> "g".localeCompare("t"))
+    // ["f","g","t","s"].sort(("t","s")=> "t".localeCompare("s"))
+    // ["f","g","s","t"]
+    // ["f","g","s","a"]
+    // [1,23,451,12,1,3,5]
+    // 1,1,12,23,451,
+    uuendaEsemed(tooted);
+    // state uuendab HTMLi, mis saab uue väärtuse sulgude sees
+    // (algväärtus on useState sulgude sees)
+  }
+
+  function sortNimetusKahan() {
+    let tooted = saaEsemed();
+    tooted.sort((a,b) => b.nimetus.localeCompare(a.nimetus));
+    uuendaEsemed(tooted);
+  }
+
+  function sortHindKasv() {
+    let tooted = saaEsemed();
+    tooted.sort((a,b) => a.price - b.price);
+    uuendaEsemed(tooted);
+  }
+
+  function sortHindKahan() {
+    let tooted = saaEsemed();
+    tooted.sort((a,b) => b.price - a.price);
+    uuendaEsemed(tooted);
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form
@@ -48,14 +84,14 @@ function Kodu() {
   // </form>
 
   return(<div>
-    <Button variant="success" onClick={nupuvajutus}>Järjesta A-Z</Button>
-    <Button variant="success">Järjesta Z-A</Button>
-    <Button variant="success">Järjesta hind kasvavalt</Button>
-    <Button variant="success">Järjesta hind kahanevalt</Button>
+    <Button variant="success" onClick={sortNimetusKasv}>{t('sort_asc')}</Button>
+    <Button variant="success" onClick={sortNimetusKahan}>Järjesta Z-A</Button>
+    <Button variant="success" onClick={sortHindKasv}>Järjesta hind kasvavalt</Button>
+    <Button variant="success" onClick={sortHindKahan}>Järjesta hind kahanevalt</Button>
     <br/><br/>
     <Button variant="outline-primary">Näita kodumaiseid</Button>
     <Button variant="outline-primary">Näita e-ainete vabu</Button>
-    <EsemeteList esemed={saaEsemed()} />
+    <EsemeteList esemed={esemed} />
       
       
       {/* punast värvi pöörudb vastuvõtva Component poole (omadus)

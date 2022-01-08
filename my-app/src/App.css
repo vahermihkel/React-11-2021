@@ -74,3 +74,12 @@ a:hover {
 .center {
   text-align: center;
 }
+
+.form {
+  text-align: center;
+}
+
+.input-form {
+  width: 50%;
+  margin: auto;
+}

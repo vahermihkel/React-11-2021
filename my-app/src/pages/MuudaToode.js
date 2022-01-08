@@ -6,28 +6,26 @@ function ÜksToode() {
   const katInputRef = useRef();
   const piltInputRef = useRef();
   
-  // window.location.href = http://localhost:3000/muuda/coca-cola
-  // http://localhost:3000/muuda/coca-cola .split("o") -- ["http://l","calh","st:3000/muuda/c","ca-c","la"]
-  // split("o")[3] --- "ca-c"
   const tooteNimetus = window.location.href.split("muuda/")[1];
-  console.log(tooteNimetus);
-
   const tooted = JSON.parse(localStorage.getItem("tooted"));
-
   const toodeIndex = tooted.findIndex(toodeMasiivist => 
     toodeMasiivist.nimetus.replace(" ","-").toLowerCase() === tooteNimetus);
-
   const toode = tooted[toodeIndex];
-
   const [toodeState, uuendanToode] = useState(toode);
 
-  console.log(toode);
+  function saaKategooriad() {
+    if (localStorage.getItem("kategooriad")) {
+      return JSON.parse(localStorage.getItem("kategooriad"));
+    } else {
+      const kategooriad = ["coca", "water", "kali"];
+      localStorage.setItem("kategooriad",JSON.stringify(kategooriad));
+      return kategooriad;
+    }
+  }
 
   function muudaToode(event) {
     event.preventDefault(); // JavaScriptil on tavaline teguviis teha
     // -> vormisisestusele <- refresh. PreventDefault === VäldiTavapärast
-    console.log("muuda nupule klikkimine töötab");
-    console.log(nimetusInputRef.current.value);
     const uuendatudToode = {
       nimetus: nimetusInputRef.current.value,
       price: hindInputRef.current.value,
@@ -53,7 +51,11 @@ function ÜksToode() {
       <label>Hind</label> <br/>
       <input ref={hindInputRef} defaultValue={toode.price} type="number" /> <br/>
       <label>Kategooria</label> <br/>
-      <input ref={katInputRef} defaultValue={toode.kategooria} type="text" /> <br/>
+      {/* <input ref={katInputRef} defaultValue={toode.kategooria} type="text" /> <br/> */}
+      <select ref={katInputRef} defaultValue={toode.kategooria}>
+        {saaKategooriad().map(kategooria => <option value={kategooria}>{kategooria}</option>)}
+      </select>
+      <br />
       <label>Pilt</label> <br/>
       <input ref={piltInputRef} defaultValue={toode.pilt} type="text" /> <br/>
       <button>Muuda</button> <br/>

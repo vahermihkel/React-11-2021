@@ -8,6 +8,8 @@ import Ostukorv from './pages/Ostukorv';
 import MuudaToode from './pages/MuudaToode';
 import UusToode from './pages/UusToode';
 import ÜksToode from './pages/ÜksToode';
+import AdminEsemeteList from './pages/AdminEsemeteList';
+import Kategooria from './pages/Kategooria';
 
 
 // path -> mis järgneb localhost:3000 aadressile
@@ -28,6 +30,8 @@ function App() {
         <Route path="/ostukorv" exact element={<Ostukorv/>} />
         <Route path="/lisa-toode" exact element={<UusToode/>} />
         <Route path="/admin" exact element={<Admin/>} />
+        <Route path="/admin/tooted" exact element={<AdminEsemeteList/>} />
+        <Route path="/admin/kategooria" exact element={<Kategooria/>} />
         <Route path="/toode/:toodeNimetus" exact element={<ÜksToode/>} />
         <Route path="/muuda/:toodeNimetus" exact element={<MuudaToode/>} />
       </Routes>

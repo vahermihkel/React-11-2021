@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from 'react-i18next';
 
 function Ese(omadused) {
+  const { t } = useTranslation();
+
   function lisaOstukorvi() {
     const toode = {
       nimetus: omadused.nimetus,
@@ -18,7 +21,7 @@ function Ese(omadused) {
     } else {
       sessionStorage.setItem("ostukorv", JSON.stringify([toode]));
     }
-    toast.success("Lisatud ostukorvi!", {
+    toast.success(t("added_to_cart"), {
       position: "bottom-right",
       theme: "dark"
       });
@@ -26,8 +29,8 @@ function Ese(omadused) {
 
   return (<div>
     <Link to={`toode/${omadused.nimetus.replace(" ","-").toLowerCase()}`}>
-    <div>Pealkiri: {omadused.nimetus}</div>
-    <div>Hind: {omadused.hind}</div>
+    <div>{t("product.title")}: {omadused.nimetus}</div>
+    <div>{t("product.price")}: {omadused.hind}</div>
     <div>Kategooria: {omadused.kategooria}</div>
     {omadused.pilt && <div><img className="item-image" src={omadused.pilt} alt="" /><br/></div>}
     </Link>

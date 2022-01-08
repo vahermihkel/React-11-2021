@@ -1,4 +1,9 @@
-import {useRef} from 'react'; // impordin Reactis HOOKI nimega useRef
+import {useRef, useState} from 'react'; // impordin Reactis HOOKI nimega useRef
+import Form from 'react-bootstrap/Form';
+import Dropdown from 'react-bootstrap/Dropdown';
+import Button from 'react-bootstrap/Button';
+import { Link } from "react-router-dom";
+
 // document.getElementById("mingi-id").value
 // mingiVäärtusRef.current.value
 
@@ -18,16 +23,13 @@ function UusToode() {
   const kategooriaInputRef = useRef();
   const piltInputRef = useRef();
 
+  // --------------------------------------
+  const [toggleText, updateToggleText] = useState("Vali kategooria");
+  // --------------------------------------
+
   function vormiSisestus(event) {
     event.preventDefault(); // seda peab tegema kui onSubmit kaudu funktsioon käima panna
     // let toodeInput = document.getElementById("toode").value;
-    // console.log(toodeInput);
-    console.log(nimetusInputRef.current.value); // ref.current.value
-            // ref.current === document.getElementById("toode")
-    console.log(hindInputRef.current.value);
-    console.log(kategooriaInputRef.current.value);
-    console.log(piltInputRef.current.value);
-    console.log("vormi sisestus töötab");
     const toode = {
       nimetus: nimetusInputRef.current.value,
       price: hindInputRef.current.value,
@@ -36,32 +38,64 @@ function UusToode() {
     }
 
     if (localStorage.getItem("tooted")) {
-      // // console.log("on selline võti");
       const tootedStorageSeest = localStorage.getItem("tooted");
-      const tootedMitteStringiKujul = JSON.parse(tootedStorageSeest);    
-      // // console.log(typeof tootedStorageSeest);
-      // // console.log(typeof tootedMitteStringiKujul);
+      const tootedMitteStringiKujul = JSON.parse(tootedStorageSeest);  
       tootedMitteStringiKujul.push(toode);
-      // localStorage.setItem("tooted", JSON.stringify(tootedMitteStringiKujul));
       localStorage.setItem("tooted", JSON.stringify(tootedMitteStringiKujul));
     } else {
-      // console.log("ei ole sellist võtit");
       localStorage.setItem("tooted", JSON.stringify([toode]));
     }
   }
 
+  function saaKategooriad() {
+    if (localStorage.getItem("kategooriad")) {
+      return JSON.parse(localStorage.getItem("kategooriad"));
+    } else {
+      const kategooriad = ["coca", "water", "kali"];
+      localStorage.setItem("kategooriad",JSON.stringify(kategooriad));
+      return kategooriad;
+    }
+  }
+
+  // --------------------------------------
+  function updateToggle(kategooria) {
+    updateToggleText(kategooria);
+  }
+  // --------------------------------------
+
   return (
-  <form onSubmit={vormiSisestus}>
-    <label>Nimetus</label> <br/>
-    <input ref={nimetusInputRef} type="text" /> <br/>
-    <label>Hind</label> <br/>
-    <input ref={hindInputRef} step="0.01" type="number" /> <br/>
-    <label>Kategooria</label> <br/>
-    <input ref={kategooriaInputRef} type="text" /> <br/>
-    <label>Pilt</label> <br/>
-    <input ref={piltInputRef} type="text" /> <br/>
-    <button>Lisa ese</button>
-  </form>)
+    <div>
+      <Link to="/admin">
+        <button>Tagasi</button>
+      </Link>
+      <div className='form'>
+        <Form className='input-form'>
+          <Form.Label>Nimetus</Form.Label> <br/>
+          <Form.Control ref={nimetusInputRef} type="text" /> <br/>
+          <Form.Label>Hind</Form.Label> <br/>
+          <Form.Control ref={hindInputRef} step="0.01" type="number" /> <br/>
+          <Form.Label>Kategooria</Form.Label> <br/>
+          {/* <Form.Control ref={kategooriaInputRef} type="text" /> <br/> */}
+          <Dropdown>
+            <Dropdown.Toggle>
+              {toggleText}
+            </Dropdown.Toggle>
+            <Dropdown.Menu ref={kategooriaInputRef} >
+              {saaKategooriad().map(kategooria => 
+                  <Dropdown.Item 
+                    onClick={() => updateToggle(kategooria)} 
+                    value={kategooria}>
+                      {kategooria}
+                  </Dropdown.Item>)}
+            </Dropdown.Menu>
+          </Dropdown>
+          <br />
+          <Form.Label>Pilt</Form.Label> <br/>
+          <Form.Control ref={piltInputRef} type="text" /> <br/>
+          <Button onClick={vormiSisestus}>Lisa ese</Button>
+        </Form>
+      </div>
+    </div>)
 }
 
 export default UusToode;
