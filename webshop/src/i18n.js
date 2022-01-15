@@ -8,19 +8,22 @@ const resources = {
   en: {
     translation: {
       "admin-link": "Admin view",
-      "cart-link": "Cart"
+      "cart-link": "Cart",
+      "add-cart-button": "Add to cart"
     }
   },
   ee: {
     translation: {
       "admin-link": "Administraatori vaade",
-      "cart-link": "Ostukorv"
+      "cart-link": "Ostukorv",
+      "add-cart-button": "Lisa ostukorvi"
     }
   },
   ru: {
     translation: {
       "admin-link": "RU Administraatori vaade",
-      "cart-link": "RU Ostukorv"
+      "cart-link": "RU Ostukorv",
+      "add-cart-button": "RU Lisa ostukorvi"
     }
   }
 };
