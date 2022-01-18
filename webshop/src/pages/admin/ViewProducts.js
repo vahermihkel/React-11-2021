@@ -27,6 +27,11 @@ function ViewProducts() {
     );
   }
 
+  // GET - võtab (seda ei pea panema)
+  // DELETE - kustutamine
+  // POST - lisamine
+  // PUT - asendamine
+
   return (
   <div>
     <button onClick={deleteAllFromDb}>Kustuta kõik tooted andmebaasist</button>
