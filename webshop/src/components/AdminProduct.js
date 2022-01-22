@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import Button from 'react-bootstrap/Button';
 
 function AdminProduct(props) {
   const { t } = useTranslation();
@@ -12,10 +13,14 @@ function AdminProduct(props) {
     )
   }
 
-  return (<div className="product">
-    <div>{props.product.productData.name} {props.product.productData.model} ({props.product.productData.size})</div>
-    <div>{props.product.productData.price}</div>
-    <button onClick={() => deleteProduct(props.product.id)}>X</button>
+  return (<div className="admin-product">
+    <span>{props.product.productData.name} {props.product.productData.model} ({props.product.productData.size}) </span>
+    <span>{props.product.productData.price} € </span>
+    <span>{ props.product.productData.image && <img src={props.product.productData.image} alt="" />}</span>
+   <span>
+    <Button variant="warning">{t("edit-button")}</Button>
+    <Button variant="danger" onClick={() => deleteProduct(props.product.id)}>X</Button>
+   </span>
   </div>)
 }
 

@@ -3,7 +3,10 @@ import { useTranslation } from 'react-i18next';
 function Product(props) {
   const { t } = useTranslation();
 
+  // {name: "Apple"}
   function addToCart(product) {
+    // vana: [{name: "Apple"},{name: "Apple"}]
+    // uus: [{cartProduct: {name: "Apple"}, quantity: 2}]
     if (sessionStorage.getItem("cart")) {
       let cartProducts = JSON.parse(sessionStorage.getItem("cart"));
       // cartProducts.push(product);
@@ -29,6 +32,10 @@ function Product(props) {
   return (<div className="product">
     <div>{props.product.name} {props.product.model} ({props.product.size})</div>
     <div>{props.product.price}</div>
+    { props.product.image && <span>
+        <img src={props.product.image} alt="" />
+        <br />
+      </span>}
     <button onClick={() => addToCart(props.product)}>{t("add-cart-button")}</button>
   </div>)
 }

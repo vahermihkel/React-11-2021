@@ -5,6 +5,7 @@ function AddProduct() {
   const nameRef = useRef();
   const modelRef = useRef();
   const sizeRef = useRef();
+  const imageRef = useRef();
   const priceRef = useRef();
   const descriptionRef = useRef();
   const codeRef = useRef();
@@ -18,7 +19,8 @@ function AddProduct() {
           name: nameRef.current.value,
           model: modelRef.current.value,
           size: sizeRef.current.value,
-          price: priceRef.current.value,
+          image: imageRef.current.value,
+          price: Number(priceRef.current.value),
           description: descriptionRef.current.value,
           code: codeRef.current.value
         })
@@ -34,8 +36,10 @@ function AddProduct() {
       <Form.Control ref={modelRef} required /> <br />
       <Form.Label>Suurus</Form.Label> <br />
       <Form.Control ref={sizeRef} required /> <br />
+      <Form.Label>Pilt</Form.Label> <br />
+      <Form.Control ref={imageRef} /> <br />
       <Form.Label>Hind</Form.Label> <br />
-      <Form.Control ref={priceRef} required /> <br />
+      <Form.Control ref={priceRef} type="number" required /> <br />
       <Form.Label>Kirjeldus</Form.Label> <br />
       <Form.Control ref={descriptionRef} required /> <br />
       <Form.Label>Tootekood</Form.Label> <br />
