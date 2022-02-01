@@ -19,7 +19,7 @@ function App() {
         <Route path="/toode/:id" exact element={<SingleProduct/>} />
         <Route path="/admin" exact element={<AdminHome/>} />
         <Route path="/admin/lisa-toode" exact element={<AddProduct/>} />
-        <Route path="/admin/muuda-toode" exact element={<EditProduct/>} />
+        <Route path="/admin/muuda/:id" exact element={<EditProduct/>} />
         <Route path="/admin/tooted" exact element={<ViewProducts/>} />
       </Routes>
     </div>

@@ -20,8 +20,9 @@ function ViewProducts() {
     }).then(data => {
       let productsFromDb = [];
       for (const key in data) {
-        productsFromDb.push({id: key, productData: data[key]});
+        productsFromDb.push(data[key]);
       }
+     // [{name: "Apple"},{name: "Samsung"}]
       updateProducts(productsFromDb);
     })
     }, []
@@ -38,10 +39,23 @@ function ViewProducts() {
     handleClose();
   }
 
+  function deleteProductFromDb(productId) {
+    console.log(productId);
+    const index = products.findIndex(product => product.code === productId );
+    products.splice(index,1);
+    fetch("https://webshop11-2021-default-rtdb.europe-west1.firebasedatabase.app/items.json",
+      { 
+        method: "PUT", 
+        body: JSON.stringify(products)
+      }
+    );
+    updateProducts(products.slice());
+  }
+
   return (
   <div>
     <Button variant="danger" onClick={handleShow}>{t("delete-all-products-button")}</Button>
-    {products.map(product => <AdminProduct key={product.id} product={product} />)}
+    {products.map(product => <AdminProduct onDelete={deleteProductFromDb} key={product.code} product={product} />)}
     
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

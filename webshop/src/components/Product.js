@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 function Product(props) {
   const { t } = useTranslation();
@@ -30,12 +31,14 @@ function Product(props) {
   }
 
   return (<div className="product">
-    <div>{props.product.name} {props.product.model} ({props.product.size})</div>
-    <div>{props.product.price}</div>
-    { props.product.image && <span>
-        <img src={props.product.image} alt="" />
-        <br />
-      </span>}
+     <Link to={`/toode/${props.product.code}`}>
+      <div>{props.product.name} {props.product.model} ({props.product.size})</div>
+      <div>{props.product.price}</div>
+      { props.product.image && <span>
+          <img src={props.product.image} alt="" />
+          <br />
+        </span>}
+    </Link>
     <button onClick={() => addToCart(props.product)}>{t("add-cart-button")}</button>
   </div>)
 }

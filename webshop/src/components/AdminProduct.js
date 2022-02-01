@@ -1,25 +1,23 @@
 import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 function AdminProduct(props) {
   const { t } = useTranslation();
 
   function deleteProduct(id) {
-    console.log(id);
-    fetch("https://webshop11-2021-default-rtdb.europe-west1.firebasedatabase.app/items.json/" + id,
-      { 
-        method: "DELETE", 
-      }
-    )
+    props.onDelete(id);
   }
 
   return (<div className="admin-product">
-    <span>{props.product.productData.name} {props.product.productData.model} ({props.product.productData.size}) </span>
-    <span>{props.product.productData.price} € </span>
-    <span>{ props.product.productData.image && <img src={props.product.productData.image} alt="" />}</span>
+    <span>{props.product.name} {props.product.model} ({props.product.size}) </span>
+    <span>{props.product.price} € </span>
+    <span>{ props.product.image && <img src={props.product.image} alt="" />}</span>
    <span>
-    <Button variant="warning">{t("edit-button")}</Button>
-    <Button variant="danger" onClick={() => deleteProduct(props.product.id)}>X</Button>
+    <Link to={`/admin/muuda/${props.product.code}`}>
+      <Button variant="warning">{t("edit-button")}</Button>
+    </Link>
+    <Button variant="danger" onClick={() => deleteProduct(props.product.code)}>X</Button>
    </span>
   </div>)
 }
